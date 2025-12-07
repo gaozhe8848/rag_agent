@@ -2,66 +2,39 @@
   "schema_metadata": {
     "api_source": "BMC Remedy AR System",
     "resource_type": "Work Info / Work Log",
-    "version": "1.0",
+    "version": "2.0",
     "description": "Definition and interpretation rules for ITSM ticket work logs."
   },
-  "json_structure": {
-    "root_key": "entries",
-    "data_container": "values",
-    "primary_text_field": "Detailed Description"
-  },
   "field_definitions": {
-    "Incident Number": {
-      "role": "Foreign Key",
-      "instruction": "Use this value to group distinct log entries into a single ticket history."
+    "Incident Number": { "role": "Foreign Key", "instruction": "Group all entries by this ID." },
+    "Submit Date": { "role": "Sort Key", "instruction": "Sort oldest to newest." },
+    "Submitter": { "role": "Actor", "instruction": "The ID of the person or system creating the log." },
+    "Work Log Type": { "role": "Intent Classifier", "categories": [ "Investigation", "General Information", "Customer Communication", "Resolution", "System Event", "Vendor Ticket Information" ] },
+    "Detailed Description": { "role": "Primary Content", "instruction": "Main text body." },
+    "View Access": { "role": "Visibility", "values": ["Public", "Internal"] }
+  },
+  "analysis_rules": {
+    "root_cause_analysis": {
+      "strategy": "Look for the specific 'turning point' in the logs.",
+      "priority_signals": [
+        "Work Log Type equals 'Resolution'",
+        "Work Log Type equals 'Vendor Ticket Information'",
+        "Keywords: 'patch', 'bug', 'defect', 'root cause', 'fixed', 'configuration change'"
+      ],
+      "instruction": "The Root Cause is rarely in the first few logs. It is usually found in the final 20% of the log history."
     },
-    "Submit Date": {
-      "role": "Sort Key",
-      "format": "ISO 8601 (YYYY-MM-DDThh:mm:ss)",
-      "instruction": "Sort entries chronologically from oldest to newest to reconstruct the timeline."
+    "contact_identification": {
+      "internal_support_team": "Any 'Submitter' who creates a log with 'View Access' = 'Internal'.",
+      "customer_identification": "Often inferred contextually. If a log is 'Customer Communication' (Public), the recipient mentioned in the text is the customer.",
+      "system_actors": ["Remedy Application Service", "security_bot", "AR_ESCALATOR"]
     },
-    "Submitter": {
-      "role": "Actor Identification",
-      "instruction": "Identify if the actor is human or automated.",
-      "heuristic": {
-        "human": "Standard usernames (e.g., 'jdoe', 'service_admin').",
-        "system": "Service accounts (e.g., 'Remedy Application Service', 'security_bot')."
-      }
-    },
-    "Work Log Type": {
-      "role": "Intent Classifier",
-      "categories": {
-        "Investigation": "Technical troubleshooting and diagnosis steps.",
-        "General Information": "General updates or context.",
-        "Customer Communication": "Direct interactions with the end-user (email/phone).",
-        "Resolution": "The final fix or answer provided to close the issue.",
-        "System Event": "Automated warnings, SLA alerts, or audit trails.",
-        "Vendor Ticket Information": "Updates provided by external 3rd party support."
-      }
-    },
-    "Detailed Description": {
-      "role": "Primary Content",
-      "instruction": "The main body of text to be summarized. If null or empty, fall back to the 'Description' field."
-    },
-    "View Access": {
-      "role": "Visibility Scope",
-      "values": {
-        "Public": "Visible to the customer. Safe for external summaries.",
-        "Internal": "Private technical notes. Exclude if generating a customer-facing report."
+    "current_status_logic": {
+      "method": "Check the Work Log Type of the very last entry (sorted by Date).",
+      "rules": {
+        "Resolved": "If last log type is 'Resolution'.",
+        "Pending Vendor": "If last log type is 'Vendor Ticket Information'.",
+        "In Progress": "All other cases."
       }
     }
-  },
-  "agent_instructions": {
-    "grouping_strategy": "Filter JSON by 'Incident Number' before processing.",
-    "narrative_arc": {
-      "start": "Identify the initial symptom via the first 'Investigation' or 'General Information' log.",
-      "middle": "Summarize 'Investigation' and 'Vendor' logs to explain the troubleshooting journey.",
-      "end": "Locate 'Resolution' logs to state the final fix."
-    },
-    "filtering_rules": [
-      "De-emphasize 'System Event' logs unless they contain error codes.",
-      "If 'Detailed Description' is redundant to 'Description', use only one.",
-      "Strictly respect 'View Access' = 'Internal' when the user requests a 'Public' summary."
-    ]
   }
 }
