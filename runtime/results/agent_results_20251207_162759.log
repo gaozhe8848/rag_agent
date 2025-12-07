@@ -1,0 +1,52 @@
+=== AGENT WORKFLOW TEST RESULTS ===
+Run Timestamp: 20251207_162759
+Model: gpt-5-mini
+Indexing Time: 0.7952s
+
+🔹 TESTING WORKFLOW: ROOT CAUSE ANALYSIS
+❓ User Query: What was the technical root cause of incident INC000000987654? Don't give me a summary, just the cause.
+----------------------------------------
+💡 Agent Response:
+A software/firmware defect in the network switch causing elevated latency and intermittent packet loss — resolved by applying a vendor patch to the switch.
+
+⏱️ Query Duration: 8.5877s
+============================================================
+
+🔹 TESTING WORKFLOW: STATUS & CONTACTS
+❓ User Query: Who worked on ticket INC000000987654 and is it closed yet?
+----------------------------------------
+💡 Agent Response:
+Unique submitters:
+- service_admin
+
+Last log (most recent):
+- Timestamp: 2023-10-27T17:00:00.000+0000
+- Work Log Type: Resolution
+- Note: "Patch applied to switch. Latency returned to normal levels (20ms). Closing ticket."
+
+Status: Resolved / closed (last log is a Resolution).
+
+⏱️ Query Duration: 11.8290s
+============================================================
+
+🔹 TESTING WORKFLOW: FULL SUMMARY
+❓ User Query: Give me a walkthrough of what happened in ticket INC000000987655.
+----------------------------------------
+💡 Agent Response:
+Chronological walkthrough for INC000000987655 (oldest → newest):
+
+- 2023-10-28T09:15:00 — Submitter: hpotter (General Information, Internal)  
+  User called reporting they could not log into SAP. Error shown: "Too many failed attempts."
+
+- 2023-10-28T09:16:22 — Submitter: security_bot (System Event, Internal)  
+  Automated security scan run for the user; no suspicious IP activity detected. Conclusion: safe to proceed with a password reset.
+
+- 2023-10-28T09:30:00 — Submitter: hpotter (Resolution, Public)  
+  Identity verified via manager call-back. Password reset and SAP account unlocked. User confirmed successful login.
+
+Outcome: The account was locked due to repeated failed login attempts and was resolved with a verified password reset at 09:30. The security scan indicated no malicious activity.
+
+⏱️ Query Duration: 10.6713s
+============================================================
+
+🏁 Total Program Runtime: 31.8843s

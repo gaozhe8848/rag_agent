@@ -1,0 +1,73 @@
+=== AGENT WORKFLOW TEST RESULTS ===
+Run Timestamp: 20251207_163103
+Model: gpt-5.1
+Indexing Time: 0.6432s
+
+🔹 TESTING WORKFLOW: ROOT CAUSE ANALYSIS
+❓ User Query: What was the technical root cause of incident INC000000987654? Don't give me a summary, just the cause.
+----------------------------------------
+💡 Agent Response:
+The technical root cause was an issue on the network switch that required a patch; once the switch patch was applied, latency returned to normal levels.
+
+⏱️ Query Duration: 2.6314s
+============================================================
+
+🔹 TESTING WORKFLOW: STATUS & CONTACTS
+❓ User Query: Who worked on ticket INC000000987654 and is it closed yet?
+----------------------------------------
+💡 Agent Response:
+Here’s what the ticket history shows for INC000000987654:
+
+1. **Who worked on it (Submitters)**  
+   - The only submitter in the work logs is: **service_admin**  
+   (They performed both the investigation and the resolution updates.)
+
+2. **Is it closed yet? (Current status)**  
+   - The **last log entry** (2023-10-27T17:00:00.000+0000) has **Work Log Type = "Resolution"** with text:  
+     *"Patch applied to switch. Latency returned to normal levels (20ms). Closing ticket."*  
+   - Per the guide’s status rules, when the last entry is a **Resolution**, the ticket is considered **Resolved/Closed**.
+
+**Answer:**  
+- Worked on by: **service_admin**  
+- Status: **Yes, it is closed (resolved).**
+
+⏱️ Query Duration: 6.5528s
+============================================================
+
+🔹 TESTING WORKFLOW: FULL SUMMARY
+❓ User Query: Give me a walkthrough of what happened in ticket INC000000987655.
+----------------------------------------
+💡 Agent Response:
+Here’s the chronological walkthrough of what happened in INC000000987655:
+
+1. **2023-10-28 09:15:00 – User reports issue (ticket created)**
+   - **Submitter:** hpotter  
+   - **Type:** General Information (Internal)  
+   - **Details:** User called the service desk saying they **could not log into SAP**.  
+   - **Error:** “Too many failed attempts.”  
+   - Interpretation: Account appears to be **locked out** due to multiple failed login attempts.
+
+2. **2023-10-28 09:16:22 – Automated security check**
+   - **Submitter:** security_bot  
+   - **Type:** System Event (Internal)  
+   - **Details:** An **automated security scan** runs against the user’s account and activity.  
+   - **Result:** “Security scan shows **no suspicious IP activity** for this user. **Safe to reset**.”  
+   - Interpretation: No sign of compromise or abnormal login behavior; it’s safe for the agent to proceed with an account reset/unlock.
+
+3. **2023-10-28 09:30:00 – Issue resolved**
+   - **Submitter:** hpotter  
+   - **Type:** Resolution (Public)  
+   - **Description:** Password Reset  
+   - **Details:**  
+     - The agent **verified the user’s identity** via a **manager call‑back**.  
+     - Then **reset the password** and **unlocked the SAP account**.  
+     - The **user confirmed successful login** after the reset.  
+   - Interpretation: The incident was fully resolved, and normal access was restored.
+
+**Net summary:**  
+A user was locked out of SAP due to too many failed login attempts. After an automated security check confirmed there was no suspicious activity, the support agent performed identity verification, reset the password, unlocked the account, and confirmed with the user that login was successful. The ticket is effectively **resolved**.
+
+⏱️ Query Duration: 5.8319s
+============================================================
+
+🏁 Total Program Runtime: 15.6601s

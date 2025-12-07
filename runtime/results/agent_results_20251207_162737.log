@@ -1,0 +1,8 @@
+=== AGENT WORKFLOW TEST RESULTS ===
+Run Timestamp: 20251207_162737
+Model: gpt-5-mini
+Indexing Time: 0.6757s
+
+🔹 TESTING WORKFLOW: ROOT CAUSE ANALYSIS
+❓ User Query: What was the technical root cause of incident INC000000987654? Don't give me a summary, just the cause.
+----------------------------------------

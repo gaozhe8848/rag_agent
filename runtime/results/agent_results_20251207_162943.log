@@ -1,0 +1,74 @@
+=== AGENT WORKFLOW TEST RESULTS ===
+Run Timestamp: 20251207_162943
+Model: gpt-5-nano
+Indexing Time: 0.6544s
+
+🔹 TESTING WORKFLOW: ROOT CAUSE ANALYSIS
+❓ User Query: What was the technical root cause of incident INC000000987654? Don't give me a summary, just the cause.
+----------------------------------------
+💡 Agent Response:
+Switch fault causing high latency; resolved by applying a patch to the switch.
+
+⏱️ Query Duration: 19.0266s
+============================================================
+
+🔹 TESTING WORKFLOW: STATUS & CONTACTS
+❓ User Query: Who worked on ticket INC000000987654 and is it closed yet?
+----------------------------------------
+💡 Agent Response:
+Here’s what I found for INC000000987654:
+
+- Submitters: service_admin (only submitter across the logs)
+- Last log timestamp: 2023-10-27 17:00:00 UTC
+- Status: Resolved/Closed (the last log is a Resolution)
+- Last log details: "Patch applied to switch. Latency returned to normal levels (20ms). Closing ticket." (submitted by service_admin)
+
+If you want, I can provide a brief timeline or export the logs for reporting.
+
+⏱️ Query Duration: 13.9313s
+============================================================
+
+🔹 TESTING WORKFLOW: FULL SUMMARY
+❓ User Query: Give me a walkthrough of what happened in ticket INC000000987655.
+----------------------------------------
+💡 Agent Response:
+Here’s the chronological walkthrough for INC000000987655
+
+Timeline
+- 2023-10-28 09:15:00 UTC
+  - Work Log ID: WLG000000124001
+  - Submitter: hpotter
+  - Type: General Information (Internal)
+  - Description: Account Locked
+  - Details: User reported they cannot log into SAP. Error message: "Too many failed attempts."
+  - Context: Initial incident report about a login failure.
+
+- 2023-10-28 09:16:22 UTC
+  - Work Log ID: WLG000000124002
+  - Submitter: security_bot
+  - Type: System Event (Internal)
+  - Description: Automated Security Scan
+  - Details: Security scan shows no suspicious IP activity for this user. Safe to reset.
+  - Context: Security check clearing potential risk before remediation.
+
+- 2023-10-28 09:30:00 UTC
+  - Work Log ID: WLG000000124003
+  - Submitter: hpotter
+  - Type: Resolution (Public)
+  - Description: Password Reset
+  - Details: Verified user identity via manager call-back. Reset password and unlocked SAP account. User confirmed successful login.
+  - Context: Issue resolved and access restored.
+
+Current status
+- Last log type: Resolution. The ticket is: Resolved.
+
+What happened (summary)
+- The user couldn't log into SAP due to too many failed attempts.
+- An automated security check confirmed no malicious activity and allowed remediation.
+- The password was reset after identity verification, unlocking the SAP account.
+- The user confirmed they could log in successfully, completing the resolution.
+
+⏱️ Query Duration: 25.3031s
+============================================================
+
+🏁 Total Program Runtime: 58.9162s
