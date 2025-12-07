@@ -1,0 +1,67 @@
+{
+  "schema_metadata": {
+    "api_source": "BMC Remedy AR System",
+    "resource_type": "Work Info / Work Log",
+    "version": "1.0",
+    "description": "Definition and interpretation rules for ITSM ticket work logs."
+  },
+  "json_structure": {
+    "root_key": "entries",
+    "data_container": "values",
+    "primary_text_field": "Detailed Description"
+  },
+  "field_definitions": {
+    "Incident Number": {
+      "role": "Foreign Key",
+      "instruction": "Use this value to group distinct log entries into a single ticket history."
+    },
+    "Submit Date": {
+      "role": "Sort Key",
+      "format": "ISO 8601 (YYYY-MM-DDThh:mm:ss)",
+      "instruction": "Sort entries chronologically from oldest to newest to reconstruct the timeline."
+    },
+    "Submitter": {
+      "role": "Actor Identification",
+      "instruction": "Identify if the actor is human or automated.",
+      "heuristic": {
+        "human": "Standard usernames (e.g., 'jdoe', 'service_admin').",
+        "system": "Service accounts (e.g., 'Remedy Application Service', 'security_bot')."
+      }
+    },
+    "Work Log Type": {
+      "role": "Intent Classifier",
+      "categories": {
+        "Investigation": "Technical troubleshooting and diagnosis steps.",
+        "General Information": "General updates or context.",
+        "Customer Communication": "Direct interactions with the end-user (email/phone).",
+        "Resolution": "The final fix or answer provided to close the issue.",
+        "System Event": "Automated warnings, SLA alerts, or audit trails.",
+        "Vendor Ticket Information": "Updates provided by external 3rd party support."
+      }
+    },
+    "Detailed Description": {
+      "role": "Primary Content",
+      "instruction": "The main body of text to be summarized. If null or empty, fall back to the 'Description' field."
+    },
+    "View Access": {
+      "role": "Visibility Scope",
+      "values": {
+        "Public": "Visible to the customer. Safe for external summaries.",
+        "Internal": "Private technical notes. Exclude if generating a customer-facing report."
+      }
+    }
+  },
+  "agent_instructions": {
+    "grouping_strategy": "Filter JSON by 'Incident Number' before processing.",
+    "narrative_arc": {
+      "start": "Identify the initial symptom via the first 'Investigation' or 'General Information' log.",
+      "middle": "Summarize 'Investigation' and 'Vendor' logs to explain the troubleshooting journey.",
+      "end": "Locate 'Resolution' logs to state the final fix."
+    },
+    "filtering_rules": [
+      "De-emphasize 'System Event' logs unless they contain error codes.",
+      "If 'Detailed Description' is redundant to 'Description', use only one.",
+      "Strictly respect 'View Access' = 'Internal' when the user requests a 'Public' summary."
+    ]
+  }
+}

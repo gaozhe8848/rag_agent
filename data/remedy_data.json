@@ -1,0 +1,95 @@
+{
+  "entries": [
+    {
+      "values": {
+        "Work Log ID": "WLG000000123456",
+        "Incident Number": "INC000000987654",
+        "Submitter": "service_admin",
+        "Submit Date": "2023-10-27T14:30:00.000+0000",
+        "Description": "Troubleshooting network connectivity",
+        "Detailed Description": "User reported intermittent packet loss. Ping tests confirmed high latency. Escalating to Network Engineering.",
+        "Work Log Type": "Investigation",
+        "View Access": "Internal"
+      }
+    },
+    {
+      "values": {
+        "Work Log ID": "WLG000000123460",
+        "Incident Number": "INC000000987654",
+        "Submitter": "service_admin",
+        "Submit Date": "2023-10-27T17:00:00.000+0000",
+        "Description": "Resolution",
+        "Detailed Description": "Patch applied to switch. Latency returned to normal levels (20ms). Closing ticket.",
+        "Work Log Type": "Resolution",
+        "View Access": "Public"
+      }
+    },
+    {
+      "values": {
+        "Work Log ID": "WLG000000124001",
+        "Incident Number": "INC000000987655",
+        "Submitter": "hpotter",
+        "Submit Date": "2023-10-28T09:15:00.000+0000",
+        "Description": "Account Locked",
+        "Detailed Description": "User called reporting they cannot log into SAP. Error message: 'Too many failed attempts'.",
+        "Work Log Type": "General Information",
+        "View Access": "Internal"
+      }
+    },
+    {
+      "values": {
+        "Work Log ID": "WLG000000124002",
+        "Incident Number": "INC000000987655",
+        "Submitter": "security_bot",
+        "Submit Date": "2023-10-28T09:16:22.000+0000",
+        "Description": "Automated Security Scan",
+        "Detailed Description": "Security scan shows no suspicious IP activity for this user. Safe to reset.",
+        "Work Log Type": "System Event",
+        "View Access": "Internal"
+      }
+    },
+    {
+      "values": {
+        "Work Log ID": "WLG000000124003",
+        "Incident Number": "INC000000987655",
+        "Submitter": "hpotter",
+        "Submit Date": "2023-10-28T09:30:00.000+0000",
+        "Description": "Password Reset",
+        "Detailed Description": "Verified user identity via manager call-back. Reset password and unlocked SAP account. User confirmed successful login.",
+        "Work Log Type": "Resolution",
+        "View Access": "Public"
+      }
+    },
+    {
+      "values": {
+        "Work Log ID": "WLG000000125001",
+        "Incident Number": "INC000000987656",
+        "Submitter": "mmanager",
+        "Submit Date": "2023-10-29T11:00:00.000+0000",
+        "Description": "Hardware Request Approval",
+        "Detailed Description": "I approve the request for dual 27-inch monitors for the design workstation.",
+        "Work Log Type": "Approval",
+        "View Access": "Public"
+      }
+    },
+    {
+      "values": {
+        "Work Log ID": "WLG000000125002",
+        "Incident Number": "INC000000987656",
+        "Submitter": "procurement_dept",
+        "Submit Date": "2023-10-29T14:45:00.000+0000",
+        "Description": "Order Placed",
+        "Detailed Description": "Monitors ordered from vendor CDW. PO# 998877. Expected delivery: 3 business days.",
+        "Work Log Type": "Procurement",
+        "View Access": "Internal"
+      }
+    }
+  ],
+  "_links": {
+    "self": [
+      {
+        "href": "https://remedy-server.example.com/api/arsys/v1/entry/HPD:WorkLog"
+      }
+    ]
+  }
+}
